@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form ,Button } from 'react-bootstrap';
+import { Form ,Button, Image } from 'react-bootstrap';
 import axios from 'axios';
 
  class Main extends Component {
@@ -11,6 +11,8 @@ import axios from 'axios';
           longitude:'',
           latitude:'',
           displayError: false,
+          desplayMap: true,
+
         }
       }
       
@@ -25,6 +27,7 @@ import axios from 'axios';
           longitude:axiosResponse.data[0].lon,
           latitude:axiosResponse.data[0].lat,
           displayError: false,
+          desplayMap: true,
       
           
         });
@@ -69,11 +72,18 @@ import axios from 'axios';
 
           <Button variant="primary" type="submit">Explore!</Button>
         </Form>
-        <h1>{this.state.cityName}</h1>
-        <h1>{this.state.longitude}</h1>
-        <h1>{this.state.latitude}</h1>
           {/* --------------------------------------------------------------------------- */}
+         
+         {this.state.desplayMap &&
+         <div>
+             <h1>{this.state.cityName}</h1>
+             <h1>{this.state.longitude}</h1>
+             <h1>{this.state.latitude}</h1>
 
+        <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.064267016d83e6a3caea3cf7190b14a8&city=${this.state.latitude},${this.state.longitude}&zoom=10`} rounded />
+        
+         </div>
+         }
 
             </div>
         )
