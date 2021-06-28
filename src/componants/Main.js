@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form ,Button } from 'react-bootstrap';
+import { Form ,Button,Image,Card } from 'react-bootstrap';
 import axios from 'axios';
 
  class Main extends Component {
@@ -12,16 +12,18 @@ import axios from 'axios';
           latitude:'',
           displayError: false,
           displayMap: true,
+          weatherData: [],
 
         }
+        console.log(this.props.weatherData);
       }
-      
       
       
       submitCity= async(e)=>{
         e.preventDefault()
         try{ let axiosResponse = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.064267016d83e6a3caea3cf7190b14a8&city=${this.state.cityName}&format=json`)
         
+
         this.setState({
           cityName: axiosResponse.data[0].display_name,
           longitude:axiosResponse.data[0].lon,
@@ -31,7 +33,8 @@ import axios from 'axios';
       
           
         });
-        
+     
+      
         console.log(axiosResponse.data)
       }
         catch  (error) {
@@ -55,7 +58,7 @@ import axios from 'axios';
                 {/*--------------------- to show error message -------------------------  */}
                 {this.state.displayError &&
                    <p class="alert alert-warning" role="alert">
-                   Error 404 : Wrong Input! Enter Valid City Name
+                   Error  : Wrong Input! Enter Valid City Name
                    </p>
                    }
 
@@ -80,6 +83,9 @@ import axios from 'axios';
              <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.064267016d83e6a3caea3cf7190b14a8&center=${this.state.latitude},${this.state.longitude}&zoom=20&format=png`} rounded />        
          </div>
          }
+
+
+            
 
             </div>
         )
