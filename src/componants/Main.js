@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Form ,Button,Image } from 'react-bootstrap';
 import Weather from './Weather';
+import Movies from './Movies';
 import axios from 'axios';
 let iqKey=process.env.REACT_APP_LOCATIONIQ_API_KEY
+// let PORT = process.env.REACT_APP_BACKEND_URL
 
  class Main extends Component {
 
@@ -15,10 +17,10 @@ let iqKey=process.env.REACT_APP_LOCATIONIQ_API_KEY
           displayError: false,
           displayMap: true,
           weatherData: [],
-          // movieData=[]
+          moviesData:[],
 
         }
-        console.log(this.state.weatherData);
+        console.log(this.moviesData);
       }
       
       
@@ -43,11 +45,11 @@ let iqKey=process.env.REACT_APP_LOCATIONIQ_API_KEY
             weatherData:axiosLocalApi.data,
           });
 
-          // const moviApi= await axios.get(`${KeyLocal}/movies?city=${this.state.cityName}`)
-          // this.setState({
-          //   movieData:moviApi.data,
-          //   cityName: moviApi.data[0].display_name,
-          // });
+          const movieApi= await axios.get(`http://localhost:8000/movies?city=${this.state.cityName}`)
+          this.setState({
+            moviesData: movieApi.data,
+
+          });
 
 
         console.log(axiosLocalApi.data)
@@ -103,12 +105,12 @@ let iqKey=process.env.REACT_APP_LOCATIONIQ_API_KEY
               return <Weather desc={value.description} date={value.date} />
             })
             }
-
-            {/* {
-              this.state.moviesData.map(value => {
-                return <Movies title={value.title} image_url={value.image_url}
-                vote_average={value.vote_average} />
-              })} */}
+            {/* -----------------------------------for movies------------------------------- */}
+            {
+              this.state.moviesData.map(item => {
+                return <Movies title={item.title} image_url={item.image_url}
+                 overview={item.overview} vote_average={item.vote_average} />
+              })}
 
           </div>
         )
